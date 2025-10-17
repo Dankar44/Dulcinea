@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulcinea - Sabor y Tradición</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos personalizados para aplicar las fuentes */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFF8E1; /* Un amarillo pálido como base */
+            position: relative;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .menu-item-description {
+            font-size: 0.875rem; /* 14px */
+            color: #57534e; /* stone-600 */
+            padding-left: 1rem;
+        }
+        /* Estilo para la sección Hero con la imagen de fondo */
+        .hero-section {
+            background-image: url('fondo.png');
+            background-size: cover;
+            background-position: center;
+        }
+        /* Estilo para el logo en la barra de navegación */
+        .logo-nav {
+            height: 80px; /* Tamaño del logo para pantallas grandes */
+            width: auto;
+            transition: height 0.3s ease-in-out;
+        }
+        /* Fijamos la altura de la barra para que el logo sobresalga */
+        .nav-container {
+            height: 90px; /* Mantenemos la altura de la barra */
+        }
+        /* Contenedores de imágenes con fondos de colores */
+        .img-container-croissant {
+            background-color: #D2B48C;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .img-container-cafe {
+            background-color: #8B4513;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .img-container-tarta {
+            background-color: #F5DEB3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .img-container-bocadillo {
+            background-color: #CD853F;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Animación de flotar para las tarjetas de especialidades */
+        @keyframes float {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+          100% { transform: translateY(0); }
+        }
+
+        .specialty-card {
+          animation: float 4s ease-in-out infinite;
+        }
+
+        /* Retraso escalonado para la animación de cada tarjeta */
+        #especialidades .grid > div:nth-child(2) {
+          animation-delay: 0.4s;
+        }
+        #especialidades .grid > div:nth-child(3) {
+          animation-delay: 0.8s;
+        }
+        #especialidades .grid > div:nth-child(4) {
+          animation-delay: 1.2s;
+        }
+
+        /* Estilo para las secciones con fondo de imagen */
+        .section-bg {
+            background-image: url('fondoamarillo.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        /* Overlay para reducir la intensidad del fondo */
+        .section-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.7); /* Overlay blanco semitransparente */
+            z-index: 1;
+        }
+        
+        .content-above-bg {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Estilos para el nuevo carrusel de ofertas */
+        .ofertas-carousel-container {
+            width: 100%;
+            max-width: 100%;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .ofertas-carousel {
+            position: relative;
+            height: 650px; /* Aumentado */
+            width: 100%;
+            perspective: 1000px;
+            margin: 0 auto;
+            touch-action: pan-y; /* Solo permitir desplazamiento vertical */
+        }
+
+        .ofertas-cards-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            touch-action: pan-y; /* Solo permitir desplazamiento vertical */
+        }
+
+        .ofertas-card {
+            position: absolute;
+            width: 95vw; /* Aumentado para móvil */
+            max-width: 420px; /* Aumentado */
+            height: 630px; /* Aumentado */
+            background: transparent; /* Hacemos el fondo transparente */
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            user-select: none;
+            left: 50%;
+            transform: translateX(-50%);
+            touch-action: pan-y; /* Solo permitir desplazamiento vertical */
+            overflow: hidden; /* Mantenemos esto para recortar la imagen a los bordes redondeados */
+        }
+
+        .ofertas-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Posiciones de las cartas */
+        .ofertas-card.active {
+            transform: translateX(-50%) scale(1);
+            z-index: 10;
+            opacity: 1;
+        }
+
+        .ofertas-card.prev {
+            transform: translateX(-105%) scale(0.75); /* Ajustado */
+            z-index: 5;
+            opacity: 0.6;
+        }
+
+        .ofertas-card.next {
+            transform: translateX(5%) scale(0.75); /* Ajustado */
+            z-index: 5;
+            opacity: 0.6;
+        }
+
+        .ofertas-card.hidden {
+            transform: translateX(-180%) scale(0.6);
+            opacity: 0;
+        }
+
+        .ofertas-card.hidden-right {
+            transform: translateX(80%) scale(0.6);
+            opacity: 0;
+        }
+
+        /* Navegación */
+        .ofertas-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            color: #6a11cb;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 20;
+            transition: all 0.3s ease;
+            touch-action: manipulation; /* Mejorar respuesta táctil */
+        }
+
+        .ofertas-nav-btn:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .ofertas-prev-btn {
+            left: -5px; /* Ajustado */
+        }
+
+        .ofertas-next-btn {
+            right: -5px; /* Ajustado */
+        }
+
+        .ofertas-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+            gap: 10px;
+        }
+
+        .ofertas-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            touch-action: manipulation; /* Mejorar respuesta táctil */
+        }
+
+        .ofertas-indicator.active {
+            background: #8B4513;
+            transform: scale(1.2);
+        }
+
+        /* Responsive para tablets y pantallas más grandes */
+        @media (min-width: 768px) {
+            .ofertas-carousel {
+                height: 750px; /* Aumentado */
+            }
+            
+            .ofertas-card {
+                width: 70vw;
+                max-width: 550px; /* Aumentado */
+                height: 730px; /* Aumentado */
+            }
+            
+            .ofertas-card.prev {
+                transform: translateX(-105%) scale(0.8); /* Ajustado */
+            }
+            
+            .ofertas-card.next {
+                transform: translateX(5%) scale(0.8); /* Ajustado */
+            }
+            
+            .ofertas-nav-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.7rem;
+            }
+            
+            .ofertas-prev-btn {
+                left: 15px;
+            }
+            
+            .ofertas-next-btn {
+                right: 15px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .ofertas-carousel {
+                height: 800px; /* Aumentado */
+            }
+            
+            .ofertas-card {
+                width: 520px; /* Aumentado */
+                height: 780px; /* Aumentado */
+            }
+            
+            .ofertas-card.prev {
+                transform: translateX(-115%) scale(0.8); /* Ajustado */
+            }
+            
+            .ofertas-card.next {
+                transform: translateX(15%) scale(0.8); /* Ajustado */
+            }
+            
+            .ofertas-nav-btn {
+                width: 55px;
+                height: 55px;
+                font-size: 1.8rem;
+            }
+            
+            .ofertas-prev-btn {
+                left: 20px;
+            }
+            
+            .ofertas-next-btn {
+                right: 20px;
+            }
+        }
+
+        /* Media query para pantallas de 1024px o menos */
+        @media (max-width: 1024px) {
+          .logo-nav {
+            height: 70px; /* Reducimos el tamaño del logo */
+          }
+        }
+    </style>
+</head>
+<body class="text-stone-800">
+
+    <!-- Barra de Navegación -->
+    <header class="bg-amber-800 shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-6 nav-container flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <img src="logo-blanco.png" alt="Dulcinea" class="logo-nav">
+            </a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#ofertas" class="text-amber-100 hover:text-white transition duration-300">Ofertas</a>
+                <a href="#especialidades" class="text-amber-100 hover:text-white transition duration-300">Especialidades</a>
+                <a href="#carta" class="text-amber-100 hover:text-white transition duration-300">Nuestra Carta</a>
+                <a href="#nosotros" class="text-amber-100 hover:text-white transition duration-300">Quiénes Somos</a>
+                <a href="#contacto" class="bg-yellow-400 text-amber-900 font-bold py-2 px-4 rounded-full hover:bg-yellow-500 transition duration-300">Contacto</a>
+            </div>
+            <!-- Botón para móvil -->
+            <button id="mobile-menu-button" class="md:hidden text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <!-- Menú Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-amber-800">
+            <a href="#ofertas" class="block text-amber-100 hover:bg-amber-700 py-2 px-6">Ofertas</a>
+            <a href="#especialidades" class="block text-amber-100 hover:bg-amber-700 py-2 px-6">Especialidades</a>
+            <a href="#carta" class="block text-amber-100 hover:bg-amber-700 py-2 px-6">Nuestra Carta</a>
+            <a href="#nosotros" class="block text-amber-100 hover:bg-amber-700 py-2 px-6">Quiénes Somos</a>
+            <a href="#contacto" class="block text-amber-100 hover:bg-amber-700 py-2 px-6">Contacto</a>
+        </div>
+    </header>
+
+    <!-- Sección Principal (Hero) -->
+    <section class="hero-section relative h-[60vh] min-h-[400px] bg-cover bg-center">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="relative container mx-auto px-6 h-full flex flex-col justify-center items-center text-center text-white">
+            <h1 class="text-5xl md:text-7xl font-bold font-display drop-shadow-lg">Sabor y Tradición en Cada Bocado</h1>
+            <p class="mt-4 text-lg md:text-xl max-w-2xl">Descubre la pasión por la buena comida en un ambiente cálido y acogedor.</p>
+            <a href="#carta" class="mt-8 bg-yellow-400 text-amber-900 font-bold py-3 px-8 rounded-full hover:bg-yellow-500 transition duration-300 text-lg">Ver la Carta</a>
+        </div>
+    </section>
+    
+    <!-- Sección de Ofertas -->
+    <section id="ofertas" class="py-16 md:py-24" style="background-image: url('https://www.transparenttextures.com/patterns/lined-paper.png'); background-color: #fefcf5;">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold font-display text-amber-900">Ofertas de la Semana</h2>
+            <p class="mt-2 text-stone-600 mb-10">¡No te pierdas nuestros especiales!</p>
+            
+            <!-- Nuevo carrusel de ofertas -->
+            <div class="ofertas-carousel-container">
+                <div class="ofertas-carousel">
+                    <button class="ofertas-nav-btn ofertas-prev-btn">&#10094;</button>
+                    <button class="ofertas-nav-btn ofertas-next-btn">&#10095;</button>
+                    
+                    <div class="ofertas-cards-container">
+                        <!-- Las cartas se generarán con JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="ofertas-indicators">
+                    <!-- Los indicadores se generarán con JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Especialidades -->
+    <section id="especialidades" class="py-16 md:py-24 section-bg">
+        <div class="container mx-auto px-6 content-above-bg">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold font-display text-amber-900">Nuestras Especialidades</h2>
+                <p class="mt-2 text-stone-600">Una selección de los favoritos de nuestros clientes, preparados con amor.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Producto 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden specialty-card">
+                    <div class="img-container-croissant w-full h-48">
+                        <img src="croissant.png" alt="Imagen de un croissant de mantequilla" class="h-48 object-contain">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold font-display text-amber-900">Croissant de Mantequilla</h3>
+                        <p class="mt-2 text-stone-600">Hojaldrado, dorado y perfecto para empezar el día.</p>
+                    </div>
+                </div>
+                <!-- Producto 2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden specialty-card">
+                    <div class="img-container-cafe w-full h-48">
+                        <img src="cafe.png" alt="Imagen de una taza de café" class="h-48 object-contain">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold font-display text-amber-900">Café Artesanal</h3>
+                        <p class="mt-2 text-stone-600">Granos seleccionados y tostados para un aroma inigualable.</p>
+                    </div>
+                </div>
+                <!-- Producto 3 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden specialty-card">
+                    <div class="img-container-tarta w-full h-48">
+                        <img src="tartachocolate.png" alt="Imagen de una porción de tarta" class="h-48 object-contain">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold font-display text-amber-900">Tarta del Día</h3>
+                        <p class="mt-2 text-stone-600">Pregunta por nuestra selección de tartas caseras recién hechas.</p>
+                    </div>
+                </div>
+                <!-- Producto 4 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden specialty-card">
+                    <div class="img-container-bocadillo w-full h-48">
+                        <img src="bocadillo.png" alt="Imagen de un bocadillo gourmet" class="h-48 object-contain">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold font-display text-amber-900">Bocadillo Ibérico</h3>
+                        <p class="mt-2 text-stone-600">Pan rústico, jamón ibérico y tomate natural. Un clásico infalible.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de la Carta -->
+    <main id="carta" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="border-4 border-amber-200 rounded-2xl p-6 sm:p-8 md:p-12 shadow-xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold font-display text-amber-900">Nuestra Carta</h2>
+                    <p class="mt-2 text-stone-600">Platos elaborados con ingredientes frescos y de temporada.</p>
+                </div>
+                
+                <!-- Categoría: Desayunos -->
+                <div class="mb-12">
+                    <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Desayunos</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div class="flex justify-between"><p class="font-bold">Bollería o Tostada + Café o Infusión</p><p class="font-bold text-amber-900">2.90€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Bollería o Tostada + Café o Infusión + Zumo Natural</p><p class="font-bold text-amber-900">4.50€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Desayuno Americano + Café o Infusión + Zumo Natural</p><p class="font-bold text-amber-900">6.50€</p></div>
+                    </div>
+                </div>
+
+                <!-- Categoría: Cafés y Bebidas -->
+                <div class="mb-12 grid grid-cols-1 lg:grid-cols-2 gap-x-12">
+                    <div>
+                        <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Cafés</h3>
+                        <div class="grid grid-cols-1 gap-x-8 gap-y-6">
+                            <div class="flex justify-between"><p class="font-bold">Café</p><p class="font-bold text-amber-900">1.60€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Irlandés</p><p class="font-bold text-amber-900">3.80€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Bombón</p><p class="font-bold text-amber-900">2.50€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Cappuccino</p><p class="font-bold text-amber-900">1.80€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Vienés</p><p class="font-bold text-amber-900">2.70€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Latte</p><p class="font-bold text-amber-900">2.90€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Infusiones</p><p class="font-bold text-amber-900">1.80€</p></div>
+                        </div>
+                    </div>
+                     <div class="mt-12 lg:mt-0">
+                        <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Bebidas</h3>
+                        <div class="grid grid-cols-1 gap-x-8 gap-y-6">
+                            <div class="flex justify-between"><p class="font-bold">Refresco</p><p class="font-bold text-amber-900">2.90€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Zumo Natural</p><p class="font-bold text-amber-900">2.50€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Zumo</p><p class="font-bold text-amber-900">2.60€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Agua Mineral</p><p class="font-bold text-amber-900">1.00€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Copa de Vino</p><p class="font-bold text-amber-900">2.90€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Jarra de Cerveza</p><p class="font-bold text-amber-900">2.90€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Jarra 1/2L Cerveza</p><p class="font-bold text-amber-900">4.00€</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Categoría: Coffee & Teas -->
+                <div class="mb-12">
+                    <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Coffee & Teas</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div><div class="flex justify-between"><p class="font-bold">Frappé</p><p class="font-bold text-amber-900">3.70€</p></div><p class="menu-item-description">Café frappe y leche batida con mucho hielo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Shakerato</p><p class="font-bold text-amber-900">2.70€</p></div><p class="menu-item-description">Espresso batido con mucho hielo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Bombón Iced</p><p class="font-bold text-amber-900">3.00€</p></div><p class="menu-item-description">Leche condensada y espresso batido con hielo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Matcha Vitazen</p><p class="font-bold text-amber-900">3.70€</p></div><p class="menu-item-description">Té verde matcha, zumo de naranja y hielo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Chai Latte</p><p class="font-bold text-amber-900">3.70€</p></div><p class="menu-item-description">Té chai con leche batida y hielo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Smoothies</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Batidos de frutas naturales</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Batidos</p><p class="font-bold text-amber-900">2.50€</p></div><p class="menu-item-description">Elige tu sabor favorito</p></div>
+                    </div>
+                </div>
+                
+                <!-- Categoría: Baguettes -->
+                <div class="mb-12">
+                    <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Baguettes</h3>
+                    <h4 class="text-xl font-display text-amber-800 mb-4">Frías</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-8">
+                        <div><div class="flex justify-between"><p class="font-bold">Norteño</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Anchoas con queso y tomate untado</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Vegetal</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Lechuga, tomate, huevo, espárragos mahonesa</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Cántabro</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Lechuga, atún, pimiento y salsa rosa</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Baguette Frío Catalán</p><p class="font-bold text-amber-900">3.80€</p></div><p class="menu-item-description">Jamón serrano con tomate untado y aceite de oliva</p></div>
+                    </div>
+                    <h4 class="text-xl font-display text-amber-800 mb-4">Calientes</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div><div class="flex justify-between"><p class="font-bold">Lomo</p><p class="font-bold text-amber-900">4.20€</p></div><p class="menu-item-description">Lomo con queso, pimentón y aceite</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Danés</p><p class="font-bold text-amber-900">4.20€</p></div><p class="menu-item-description">Salchicha danesa, 3 salsas, pepinillos, remolacha y cebolla frita</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Lacón</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Lacón al estilo gallego con pimentón, aceite y sal</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Vienés</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Salchicha vienesa, queso y tomate untado</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Bacon</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Bacon con tomate untado y queso</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Salmantino</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Baguette caliente de chorizo y queso</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Mallorquín</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Baguette caliente de sobrasada y queso</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Tortilla</p><p class="font-bold text-amber-900">3.50€</p></div><p class="menu-item-description">Tortilla española</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Mixto</p><p class="font-bold text-amber-900">3.20€</p></div><p class="menu-item-description">Baguette caliente de jamón y queso</p></div>
+                    </div>
+                </div>
+
+                <!-- Categoría: Croissants & Gofres -->
+                <div class="mb-12">
+                    <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Croissants & Gofres</h3>
+                    <h4 class="text-xl font-display text-amber-800 mb-4">Gratinados</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-8">
+                        <div class="flex justify-between"><p class="font-bold">Jamón y Queso</p><p class="font-bold text-amber-900">3.80€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Pollo y Champiñones</p><p class="font-bold text-amber-900">3.80€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Roquefort</p><p class="font-bold text-amber-900">3.80€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Atún</p><p class="font-bold text-amber-900">3.80€</p></div>
+                    </div>
+                    <h4 class="text-xl font-display text-amber-800 mb-4">Rellenos</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-8">
+                        <div><div class="flex justify-between"><p class="font-bold">Jamón y Queso</p><p class="font-bold text-amber-900">2.70€</p></div><p class="menu-item-description">Croissant relleno de jamón y queso</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Jamón Serrano con Tomate</p><p class="font-bold text-amber-900">2.90€</p></div></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Atún y Lechuga</p><p class="font-bold text-amber-900">2.90€</p></div><p class="menu-item-description">Con atún, lechuga y salsa rosa</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Salchichas y Bacon</p><p class="font-bold text-amber-900">2.90€</p></div><p class="menu-item-description">Croissant relleno con salchichas y bacon</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Anchoas y Tomate</p><p class="font-bold text-amber-900">2.90€</p></div><p class="menu-item-description">Croissant relleno con anchoas y tomate</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Vegetal</p><p class="font-bold text-amber-900">2.90€</p></div><p class="menu-item-description">Lechuga, tomate, huevo, espárragos y mahonesa</p></div>
+                    </div>
+                     <h4 class="text-xl font-display text-amber-800 mb-4">Dulces</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div><div class="flex justify-between"><p class="font-bold">Croissant</p><p class="font-bold text-amber-900">2.30€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Croissant con Nata</p><p class="font-bold text-amber-900">2.70€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Gofre</p><p class="font-bold text-amber-900">2.30€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Gofre con Nata</p><p class="font-bold text-amber-900">2.70€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
+                    </div>
+                </div>
+
+                 <!-- Categoría: Salchichas Danesas -->
+                <div>
+                    <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Salchichas Danesas</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div><div class="flex justify-between"><p class="font-bold">Grand Danesa</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Salchicha, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Ulof</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Salchicha blanca, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Tivoli</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Salchicha, bacon, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Súper Fleming</p><p class="font-bold text-amber-900">3.80€</p></div><p class="menu-item-description">Salchicha, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Perrito Dulcinea</p><p class="font-bold text-amber-900">2.50€</p></div><p class="menu-item-description">Salchicha, 3 salsas y cebolla frita</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sección Quiénes Somos -->
+    <section id="nosotros" class="py-16 md:py-24 section-bg">
+        <div class="container mx-auto px-6 content-above-bg flex flex-col md:flex-row items-center gap-12">
+            <div class="w-full md:w-1/2 relative">
+                <div id="image-carousel" class="relative w-full h-64 md:h-96 rounded-lg shadow-xl overflow-hidden">
+                    <img src="dulcinea1.png" alt="Imagen 1 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover">
+                    <img src="dulcinea2.png" alt="Imagen 2 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover opacity-0">
+                    <img src="dulcinea3.png" alt="Imagen 3 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover opacity-0">
+                    <img src="dulcinea4.png" alt="Imagen 4 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover opacity-0">
+                </div>
+                <!-- Mapa de Ubicación -->
+                <div class="absolute bottom-4 right-4 w-1/2 max-w-[180px] h-28 md:h-36 bg-white p-1 rounded-lg shadow-2xl z-10">
+                    <iframe
+                        src="https://maps.google.com/maps?q=Restaurante%20Dulcinea,%20Pl.%20de%20Espa%C3%B1a,%201A,%2028850%20Torrej%C3%B3n%20de%20Ardoz,%20Madrid&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                        width="100%"
+                        height="100%"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="rounded-md">
+                    </iframe>
+                </div>
+            </div>
+            <div class="md:w-1/2 text-center md:text-left">
+                <h2 class="text-4xl font-bold font-display text-amber-900">Nuestra Historia</h2>
+                <p class="mt-4 text-stone-700 leading-relaxed">Desde 2010, en "Dulcinea" hemos perseguido un sueño: crear un rincón donde cada visita sea una experiencia memorable. Somos una familia apasionada por la cocina tradicional, utilizando siempre ingredientes frescos y de proximidad. Creemos que la buena comida une a las personas, y ese es el corazón de nuestro restaurante.</p>
+                <p class="mt-4 text-stone-700 leading-relaxed">Te invitamos a sentirte como en casa.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer y Contacto -->
+    <footer id="contacto" class="bg-amber-800 text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h3 class="text-xl font-bold font-display">Dulcinea</h3>
+                    <p class="mt-2 text-amber-100">Un lugar para disfrutar de los pequeños placeres de la vida.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold font-display">Contacto y Horario</h3>
+                    <p class="mt-2 text-amber-100">Calle del Sabor, 123, Madrid</p>
+                    <p class="text-amber-100">Teléfono: 912 345 678</p>
+                    <p class="mt-2 text-amber-100"><strong>L-V:</strong> 8:00 - 22:00</p>
+                    <p class="text-amber-100"><strong>S-D:</strong> 9:00 - 23:00</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold font-display">Síguenos</h3>
+                    <div class="flex justify-center md:justify-start space-x-4 mt-4">
+                        <a href="#" class="text-amber-100 hover:text-white transition duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.058-1.689-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/></svg>
+                        </a>
+                        <a href="#" class="text-amber-100 hover:text-white transition duration-300">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.gw16v.064c0 2.298 1.62 4.218 3.768 4.654-.713.195-1.465.222-2.203.084.616 1.922 2.392 3.318 4.491 3.355-1.644 1.288-3.725 2.057-5.983 2.057-.386 0-.766-.023-1.141-.066 2.122 1.368 4.646 2.162 7.349 2.162 8.824 0 13.653-7.302 13.653-13.653 0-.207-.005-.414-.014-.62a9.72 9.72 0 0 0 2.383-2.464z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-amber-600 pt-6 text-center text-amber-200 text-sm">
+                <p>&copy; 2024 Dulcinea. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Script para el menú móvil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Script for the 'Nosotros' image carousel
+        const carouselImages = document.querySelectorAll('.carousel-image');
+        let currentImageIndex = 0;
+        const totalImages = carouselImages.length;
+
+        if (totalImages > 0) {
+            setInterval(() => {
+                carouselImages[currentImageIndex].classList.add('opacity-0');
+                currentImageIndex = (currentImageIndex + 1) % totalImages;
+                carouselImages[currentImageIndex].classList.remove('opacity-0');
+            }, 4000); // Change image every 4 seconds
+        }
+
+        // Script para el nuevo carrusel de ofertas
+        document.addEventListener('DOMContentLoaded', function() {
+            // Datos de las ofertas (imágenes de promoción)
+            const ofertasData = [
+                { image: 'promo1.JPG', alt: 'Promoción 1' },
+                { image: 'promo2.JPG', alt: 'Promoción 2' },
+                { image: 'promo3.JPG', alt: 'Promoción 3' }
+            ];
+            
+            const ofertasCardsContainer = document.querySelector('.ofertas-cards-container');
+            const ofertasIndicatorsContainer = document.querySelector('.ofertas-indicators');
+            const ofertasPrevBtn = document.querySelector('.ofertas-prev-btn');
+            const ofertasNextBtn = document.querySelector('.ofertas-next-btn');
+            
+            let currentOfertaIndex = 0;
+            let isDragging = false;
+            let startX = 0;
+            let startY = 0; // Para el scroll vertical
+            let currentX = 0;
+            
+            // Crear las cartas de ofertas
+            ofertasData.forEach((oferta, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'ofertas-card';
+                cardElement.innerHTML = `
+                    <img src="${oferta.image}" alt="${oferta.alt}">
+                `;
+                
+                // Añadir evento de clic a cada carta
+                cardElement.addEventListener('click', () => {
+                    goToOferta(index);
+                });
+                
+                ofertasCardsContainer.appendChild(cardElement);
+                
+                // Crear indicadores
+                const indicator = document.createElement('div');
+                indicator.className = 'ofertas-indicator';
+                if (index === 0) indicator.classList.add('active');
+                
+                indicator.addEventListener('click', () => {
+                    goToOferta(index);
+                });
+                
+                ofertasIndicatorsContainer.appendChild(indicator);
+            });
+            
+            // Actualizar las posiciones de las cartas
+            function updateOfertas() {
+                const ofertasCards = document.querySelectorAll('.ofertas-card');
+                const ofertasIndicators = document.querySelectorAll('.ofertas-indicator');
+                
+                ofertasCards.forEach((card, index) => {
+                    card.classList.remove('active', 'prev', 'next', 'hidden', 'hidden-right');
+                    
+                    // Calcular la posición relativa respecto a la carta actual
+                    let position = index - currentOfertaIndex;
+                    
+                    // Ajustar para comportamiento circular
+                    const totalCards = ofertasCards.length;
+                    if (position < -Math.floor(totalCards / 2)) position += totalCards;
+                    if (position > Math.floor(totalCards / 2)) position -= totalCards;
+
+                    
+                    // Aplicar clases según la posición
+                    if (position === 0) {
+                        card.classList.add('active');
+                    } else if (position === -1 || (position === totalCards - 1 && totalCards > 2)) {
+                        card.classList.add('prev');
+                    } else if (position === 1 || (position === -(totalCards - 1) && totalCards > 2)) {
+                        card.classList.add('next');
+                    } else if (position < -1) {
+                        card.classList.add('hidden');
+                    } else if (position > 1) {
+                        card.classList.add('hidden-right');
+                    }
+                });
+                
+                // Actualizar indicadores
+                ofertasIndicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentOfertaIndex);
+                });
+            }
+            
+            // Ir a una oferta específica
+            function goToOferta(index) {
+                currentOfertaIndex = index;
+                updateOfertas();
+            }
+            
+            // Navegación anterior
+            function prevOferta() {
+                currentOfertaIndex = (currentOfertaIndex - 1 + ofertasData.length) % ofertasData.length;
+                updateOfertas();
+            }
+            
+            // Navegación siguiente
+            function nextOferta() {
+                currentOfertaIndex = (currentOfertaIndex + 1) % ofertasData.length;
+                updateOfertas();
+            }
+            
+            // Eventos de los botones
+            ofertasPrevBtn.addEventListener('click', prevOferta);
+            ofertasNextBtn.addEventListener('click', nextOferta);
+            
+            // Inicializar
+            updateOfertas();
+            
+            // Navegación con teclado
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') prevOferta();
+                if (e.key === 'ArrowRight') nextOferta();
+            });
+            
+            // Navegación táctil
+            ofertasCardsContainer.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                currentX = startX;
+            }, { passive: true });
+            
+            ofertasCardsContainer.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                currentX = e.touches[0].clientX;
+            }, { passive: true });
+            
+            ofertasCardsContainer.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                const endX = e.changedTouches[0].clientX;
+                handleSwipe(startX, endX);
+            });
+
+            function handleSwipe(start, end) {
+                const swipeThreshold = 50; // Umbral de deslizamiento
+                const diffX = start - end;
+                
+                if (diffX > swipeThreshold) {
+                    nextOferta();
+                } else if (diffX < -swipeThreshold) {
+                    prevOferta();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
