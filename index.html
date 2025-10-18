@@ -62,7 +62,7 @@
             justify-content: center;
             align-items: center;
         }
-        .img-container-bocadillo {
+        .img-container-perritos {
             background-color: #CD853F;
             display: flex;
             justify-content: center;
@@ -251,6 +251,18 @@
             transform: scale(1.2);
         }
 
+        #map-iframe {
+            transition: transform 0.3s ease;
+        }
+
+        /* Ocultar el header de Google Maps en pantallas pequeñas */
+        @media (max-width: 723px) {
+            #map-iframe {
+                height: calc(100% + 50px); /* Hacemos el iframe 50px más alto que su contenedor */
+                transform: translateY(-50px); /* Lo desplazamos 50px hacia arriba */
+            }
+        }
+
         /* Responsive para tablets y pantallas más grandes */
         @media (min-width: 768px) {
             .ofertas-carousel {
@@ -323,6 +335,13 @@
         @media (max-width: 1024px) {
           .logo-nav {
             height: 70px; /* Reducimos el tamaño del logo */
+          }
+        }
+
+        /* Media query para pantallas de 767px o menos */
+        @media (max-width: 767px) {
+          .logo-nav {
+            height: 60px; /* Hacemos el logo aún más pequeño en móvil */
           }
         }
     </style>
@@ -433,12 +452,12 @@
                 </div>
                 <!-- Producto 4 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden specialty-card">
-                    <div class="img-container-bocadillo w-full h-48">
-                        <img src="bocadillo.png" alt="Imagen de un bocadillo gourmet" class="h-48 object-contain">
+                    <div class="img-container-perritos w-full h-48">
+                        <img src="perritos.png" alt="Imagen de un perritos gourmet" class="h-48 object-contain">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold font-display text-amber-900">Bocadillo Ibérico</h3>
-                        <p class="mt-2 text-stone-600">Pan rústico, jamón ibérico y tomate natural. Un clásico infalible.</p>
+                        <h3 class="text-xl font-bold font-display text-amber-900">Salchichas Danesas</h3>
+                        <p class="mt-2 text-stone-600">Salchichas danesas, pan suave y mostaza. Un clásico que nunca falla.</p>
                     </div>
                 </div>
             </div>
@@ -458,9 +477,9 @@
                 <div class="mb-12">
                     <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Desayunos</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                        <div class="flex justify-between"><p class="font-bold">Bollería o Tostada + Café o Infusión</p><p class="font-bold text-amber-900">2.90€</p></div>
-                        <div class="flex justify-between"><p class="font-bold">Bollería o Tostada + Café o Infusión + Zumo Natural</p><p class="font-bold text-amber-900">4.50€</p></div>
-                        <div class="flex justify-between"><p class="font-bold">Desayuno Americano + Café o Infusión + Zumo Natural</p><p class="font-bold text-amber-900">6.50€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Bollería o Tostada + Café o Infusión</p><p class="font-bold text-amber-900">3.10€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Bollería o Tostada + Café o Infusión + Zumo Natural</p><p class="font-bold text-amber-900">4.80€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Desayuno Americano + Café o Infusión + Zumo Natural</p><p class="font-bold text-amber-900">6.90€</p></div>
                     </div>
                 </div>
 
@@ -469,24 +488,24 @@
                     <div>
                         <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Cafés</h3>
                         <div class="grid grid-cols-1 gap-x-8 gap-y-6">
-                            <div class="flex justify-between"><p class="font-bold">Café</p><p class="font-bold text-amber-900">1.60€</p></div>
-                            <div class="flex justify-between"><p class="font-bold">Irlandés</p><p class="font-bold text-amber-900">3.80€</p></div>
-                            <div class="flex justify-between"><p class="font-bold">Bombón</p><p class="font-bold text-amber-900">2.50€</p></div>
-                            <div class="flex justify-between"><p class="font-bold">Cappuccino</p><p class="font-bold text-amber-900">1.80€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Café</p><p class="font-bold text-amber-900">1.70€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Irlandés</p><p class="font-bold text-amber-900">3.90€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Bombón</p><p class="font-bold text-amber-900">2.70€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Cappuccino</p><p class="font-bold text-amber-900">2.00€</p></div>
                             <div class="flex justify-between"><p class="font-bold">Vienés</p><p class="font-bold text-amber-900">2.70€</p></div>
                             <div class="flex justify-between"><p class="font-bold">Latte</p><p class="font-bold text-amber-900">2.90€</p></div>
-                            <div class="flex justify-between"><p class="font-bold">Infusiones</p><p class="font-bold text-amber-900">1.80€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Infusiones</p><p class="font-bold text-amber-900">1.90€</p></div>
                         </div>
                     </div>
                      <div class="mt-12 lg:mt-0">
                         <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Bebidas</h3>
                         <div class="grid grid-cols-1 gap-x-8 gap-y-6">
-                            <div class="flex justify-between"><p class="font-bold">Refresco</p><p class="font-bold text-amber-900">2.90€</p></div>
-                            <div class="flex justify-between"><p class="font-bold">Zumo Natural</p><p class="font-bold text-amber-900">2.50€</p></div>
-                            <div class="flex justify-between"><p class="font-bold">Zumo</p><p class="font-bold text-amber-900">2.60€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Refresco</p><p class="font-bold text-amber-900">3.00€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Zumo Natural</p><p class="font-bold text-amber-900">2.60€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Zumo</p><p class="font-bold text-amber-900">2.70€</p></div>
                             <div class="flex justify-between"><p class="font-bold">Agua Mineral</p><p class="font-bold text-amber-900">1.00€</p></div>
-                            <div class="flex justify-between"><p class="font-bold">Copa de Vino</p><p class="font-bold text-amber-900">2.90€</p></div>
-                            <div class="flex justify-between"><p class="font-bold">Jarra de Cerveza</p><p class="font-bold text-amber-900">2.90€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Copa de Vino</p><p class="font-bold text-amber-900">3.00€</p></div>
+                            <div class="flex justify-between"><p class="font-bold">Jarra de Cerveza</p><p class="font-bold text-amber-900">3.00€</p></div>
                             <div class="flex justify-between"><p class="font-bold">Jarra 1/2L Cerveza</p><p class="font-bold text-amber-900">4.00€</p></div>
                         </div>
                     </div>
@@ -496,13 +515,13 @@
                 <div class="mb-12">
                     <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Coffee & Teas</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                        <div><div class="flex justify-between"><p class="font-bold">Frappé</p><p class="font-bold text-amber-900">3.70€</p></div><p class="menu-item-description">Café frappe y leche batida con mucho hielo</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Shakerato</p><p class="font-bold text-amber-900">2.70€</p></div><p class="menu-item-description">Espresso batido con mucho hielo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Frappé</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Café frappe y leche batida con mucho hielo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Shakerato</p><p class="font-bold text-amber-900">2.90€</p></div><p class="menu-item-description">Espresso batido con mucho hielo</p></div>
                         <div><div class="flex justify-between"><p class="font-bold">Bombón Iced</p><p class="font-bold text-amber-900">3.00€</p></div><p class="menu-item-description">Leche condensada y espresso batido con hielo</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Matcha Vitazen</p><p class="font-bold text-amber-900">3.70€</p></div><p class="menu-item-description">Té verde matcha, zumo de naranja y hielo</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Chai Latte</p><p class="font-bold text-amber-900">3.70€</p></div><p class="menu-item-description">Té chai con leche batida y hielo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Matcha Vitazen</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Té verde matcha, zumo de naranja y hielo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Chai Latte</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Té chai con leche batida y hielo</p></div>
                         <div><div class="flex justify-between"><p class="font-bold">Smoothies</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Batidos de frutas naturales</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Batidos</p><p class="font-bold text-amber-900">2.50€</p></div><p class="menu-item-description">Elige tu sabor favorito</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Batidos</p><p class="font-bold text-amber-900">2.60€</p></div><p class="menu-item-description">Elige tu sabor favorito</p></div>
                     </div>
                 </div>
                 
@@ -514,16 +533,16 @@
                         <div><div class="flex justify-between"><p class="font-bold">Norteño</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Anchoas con queso y tomate untado</p></div>
                         <div><div class="flex justify-between"><p class="font-bold">Vegetal</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Lechuga, tomate, huevo, espárragos mahonesa</p></div>
                         <div><div class="flex justify-between"><p class="font-bold">Cántabro</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Lechuga, atún, pimiento y salsa rosa</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Baguette Frío Catalán</p><p class="font-bold text-amber-900">3.80€</p></div><p class="menu-item-description">Jamón serrano con tomate untado y aceite de oliva</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Baguette Frío Catalán</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Jamón serrano con tomate untado y aceite de oliva</p></div>
                     </div>
                     <h4 class="text-xl font-display text-amber-800 mb-4">Calientes</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                        <div><div class="flex justify-between"><p class="font-bold">Lomo</p><p class="font-bold text-amber-900">4.20€</p></div><p class="menu-item-description">Lomo con queso, pimentón y aceite</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Danés</p><p class="font-bold text-amber-900">4.20€</p></div><p class="menu-item-description">Salchicha danesa, 3 salsas, pepinillos, remolacha y cebolla frita</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Lacón</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Lacón al estilo gallego con pimentón, aceite y sal</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Vienés</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Salchicha vienesa, queso y tomate untado</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Bacon</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Bacon con tomate untado y queso</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Salmantino</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Baguette caliente de chorizo y queso</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Lomo</p><p class="font-bold text-amber-900">4.40€</p></div><p class="menu-item-description">Lomo con queso, pimentón y aceite</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Danés</p><p class="font-bold text-amber-900">4.40€</p></div><p class="menu-item-description">Salchicha danesa, 3 salsas, pepinillos, remolacha y cebolla frita</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Lacón</p><p class="font-bold text-amber-900">4.20€</p></div><p class="menu-item-description">Lacón al estilo gallego con pimentón, aceite y sal</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Vienés</p><p class="font-bold text-amber-900">4.20€</p></div><p class="menu-item-description">Salchicha vienesa, queso y tomate untado</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Bacon</p><p class="font-bold text-amber-900">4.20€</p></div><p class="menu-item-description">Bacon con tomate untado y queso</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Salmantino</p><p class="font-bold text-amber-900">4.20€</p></div><p class="menu-item-description">Baguette caliente de chorizo y queso</p></div>
                         <div><div class="flex justify-between"><p class="font-bold">Mallorquín</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Baguette caliente de sobrasada y queso</p></div>
                         <div><div class="flex justify-between"><p class="font-bold">Tortilla</p><p class="font-bold text-amber-900">3.50€</p></div><p class="menu-item-description">Tortilla española</p></div>
                         <div><div class="flex justify-between"><p class="font-bold">Mixto</p><p class="font-bold text-amber-900">3.20€</p></div><p class="menu-item-description">Baguette caliente de jamón y queso</p></div>
@@ -535,26 +554,26 @@
                     <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Croissants & Gofres</h3>
                     <h4 class="text-xl font-display text-amber-800 mb-4">Gratinados</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-8">
-                        <div class="flex justify-between"><p class="font-bold">Jamón y Queso</p><p class="font-bold text-amber-900">3.80€</p></div>
-                        <div class="flex justify-between"><p class="font-bold">Pollo y Champiñones</p><p class="font-bold text-amber-900">3.80€</p></div>
-                        <div class="flex justify-between"><p class="font-bold">Roquefort</p><p class="font-bold text-amber-900">3.80€</p></div>
-                        <div class="flex justify-between"><p class="font-bold">Atún</p><p class="font-bold text-amber-900">3.80€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Jamón y Queso</p><p class="font-bold text-amber-900">4.00€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Pollo y Champiñones</p><p class="font-bold text-amber-900">4.00€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Roquefort</p><p class="font-bold text-amber-900">4.00€</p></div>
+                        <div class="flex justify-between"><p class="font-bold">Atún</p><p class="font-bold text-amber-900">4.00€</p></div>
                     </div>
                     <h4 class="text-xl font-display text-amber-800 mb-4">Rellenos</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-8">
-                        <div><div class="flex justify-between"><p class="font-bold">Jamón y Queso</p><p class="font-bold text-amber-900">2.70€</p></div><p class="menu-item-description">Croissant relleno de jamón y queso</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Jamón Serrano con Tomate</p><p class="font-bold text-amber-900">2.90€</p></div></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Atún y Lechuga</p><p class="font-bold text-amber-900">2.90€</p></div><p class="menu-item-description">Con atún, lechuga y salsa rosa</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Salchichas y Bacon</p><p class="font-bold text-amber-900">2.90€</p></div><p class="menu-item-description">Croissant relleno con salchichas y bacon</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Anchoas y Tomate</p><p class="font-bold text-amber-900">2.90€</p></div><p class="menu-item-description">Croissant relleno con anchoas y tomate</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Vegetal</p><p class="font-bold text-amber-900">2.90€</p></div><p class="menu-item-description">Lechuga, tomate, huevo, espárragos y mahonesa</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Jamón y Queso</p><p class="font-bold text-amber-900">2.90€</p></div><p class="menu-item-description">Croissant relleno de jamón y queso</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Jamón Serrano con Tomate</p><p class="font-bold text-amber-900">3.00€</p></div></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Atún y Lechuga</p><p class="font-bold text-amber-900">3.00€</p></div><p class="menu-item-description">Con atún, lechuga y salsa rosa</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Salchichas y Bacon</p><p class="font-bold text-amber-900">3.00€</p></div><p class="menu-item-description">Croissant relleno con salchichas y bacon</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Anchoas y Tomate</p><p class="font-bold text-amber-900">3.00€</p></div><p class="menu-item-description">Croissant relleno con anchoas y tomate</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Vegetal</p><p class="font-bold text-amber-900">3.00€</p></div><p class="menu-item-description">Lechuga, tomate, huevo, espárragos y mahonesa</p></div>
                     </div>
                      <h4 class="text-xl font-display text-amber-800 mb-4">Dulces</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                        <div><div class="flex justify-between"><p class="font-bold">Croissant</p><p class="font-bold text-amber-900">2.30€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Croissant con Nata</p><p class="font-bold text-amber-900">2.70€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Gofre</p><p class="font-bold text-amber-900">2.30€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Gofre con Nata</p><p class="font-bold text-amber-900">2.70€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Croissant</p><p class="font-bold text-amber-900">2.50€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Croissant con Nata</p><p class="font-bold text-amber-900">3.00€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Gofre</p><p class="font-bold text-amber-900">2.50€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Gofre con Nata</p><p class="font-bold text-amber-900">3.00€</p></div><p class="menu-item-description">Chocolate, fresa o caramelo</p></div>
                     </div>
                 </div>
 
@@ -562,10 +581,10 @@
                 <div>
                     <h3 class="text-3xl font-display text-amber-800 border-b-2 border-amber-200 pb-2 mb-8">Salchichas Danesas</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                        <div><div class="flex justify-between"><p class="font-bold">Grand Danesa</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Salchicha, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Ulof</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Salchicha blanca, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Tivoli</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Salchicha, bacon, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
-                        <div><div class="flex justify-between"><p class="font-bold">Súper Fleming</p><p class="font-bold text-amber-900">3.80€</p></div><p class="menu-item-description">Salchicha, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Grand Danesa</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Salchicha, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Ulof</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Salchicha blanca, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Tivoli</p><p class="font-bold text-amber-900">4.00€</p></div><p class="menu-item-description">Salchicha, bacon, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
+                        <div><div class="flex justify-between"><p class="font-bold">Súper Fleming</p><p class="font-bold text-amber-900">3.90€</p></div><p class="menu-item-description">Salchicha, 3 salsas, pepinillo, remolacha y cebolla frita</p></div>
                         <div><div class="flex justify-between"><p class="font-bold">Perrito Dulcinea</p><p class="font-bold text-amber-900">2.50€</p></div><p class="menu-item-description">Salchicha, 3 salsas y cebolla frita</p></div>
                     </div>
                 </div>
@@ -584,17 +603,23 @@
                     <img src="dulcinea4.png" alt="Imagen 4 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover opacity-0">
                 </div>
                 <!-- Mapa de Ubicación -->
-                <div class="absolute bottom-4 right-4 w-1/2 max-w-[180px] h-28 md:h-36 bg-white p-1 rounded-lg shadow-2xl z-10">
-                    <iframe
-                        src="https://maps.google.com/maps?q=Restaurante%20Dulcinea,%20Pl.%20de%20Espa%C3%B1a,%201A,%2028850%20Torrej%C3%B3n%20de%20Ardoz,%20Madrid&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                        width="100%"
-                        height="100%"
-                        style="border:0;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        class="rounded-md">
-                    </iframe>
+                <div class="absolute bottom-4 right-4 w-1/3 max-w-[220px] h-20 md:w-1/2 md:h-28 bg-white p-1 rounded-lg shadow-2xl z-10">
+                    <div class="relative w-full h-full overflow-hidden rounded-md">
+                        <iframe
+                            id="map-iframe"
+                            src="https://maps.google.com/maps?q=Restaurante%20Dulcinea,%20Pl.%20de%20Espa%C3%B1a,%201A,%2028850%20Torrej%C3%B3n%20de%20Ardoz,%20Madrid&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            class="absolute w-full h-full top-0 left-0">
+                        </iframe>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Restaurante+Dulcinea,+Pl.+de+España,+1A,+28850+Torrejón+de+Ardoz,+Madrid" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       aria-label="Abrir en Google Maps"
+                       class="absolute inset-0 rounded-lg"></a>
                 </div>
             </div>
             <div class="md:w-1/2 text-center md:text-left">
@@ -615,10 +640,14 @@
                 </div>
                 <div>
                     <h3 class="text-xl font-bold font-display">Contacto y Horario</h3>
-                    <p class="mt-2 text-amber-100">Calle del Sabor, 123, Madrid</p>
-                    <p class="text-amber-100">Teléfono: 912 345 678</p>
-                    <p class="mt-2 text-amber-100"><strong>L-V:</strong> 8:00 - 22:00</p>
-                    <p class="text-amber-100"><strong>S-D:</strong> 9:00 - 23:00</p>
+                    <p class="mt-2 text-amber-100">Pl. de España, 1A, 28850 Torrejón de Ardoz, Madrid</p>
+                    <p class="text-amber-100">Teléfono: 918971799</p>
+                    <div class="mt-2 text-amber-100">
+                        <p><strong>L-J:</strong> 6:00 - 21:30</p>
+                        <p><strong>V:</strong> 6:00 - 22:00</p>
+                        <p><strong>S:</strong> 8:00 - 22:00</p>
+                        <p><strong>D:</strong> 8:00 - 16:00</p>
+                    </div>
                 </div>
                 <div>
                     <h3 class="text-xl font-bold font-display">Síguenos</h3>
@@ -627,7 +656,9 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.058-1.689-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/></svg>
                         </a>
                         <a href="#" class="text-amber-100 hover:text-white transition duration-300">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.gw16v.064c0 2.298 1.62 4.218 3.768 4.654-.713.195-1.465.222-2.203.084.616 1.922 2.392 3.318 4.491 3.355-1.644 1.288-3.725 2.057-5.983 2.057-.386 0-.766-.023-1.141-.066 2.122 1.368 4.646 2.162 7.349 2.162 8.824 0 13.653-7.302 13.653-13.653 0-.207-.005-.414-.014-.62a9.72 9.72 0 0 0 2.383-2.464z"/></svg>
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.602.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/>
+                           </svg>
                         </a>
                     </div>
                 </div>
