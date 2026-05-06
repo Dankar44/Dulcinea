@@ -8,343 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <style>
-        /* Estilos personalizados para aplicar las fuentes */
-        html, body {
-            overflow-x: hidden;
-            width: 100%;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FFF8E1; /* Un amarillo pálido como base */
-            position: relative;
-        }
-        h1, h2, h3, .font-display {
-            font-family: 'Playfair Display', serif;
-        }
-        .menu-item-description {
-            font-size: 0.875rem; /* 14px */
-            color: #57534e; /* stone-600 */
-            padding-left: 1rem;
-        }
-        /* Estilo para la sección Hero con la imagen de fondo */
-        .hero-section {
-            background-image: url('fondo.webp');
-            background-size: cover;
-            background-position: center;
-        }
-        /* Estilo para el logo en la barra de navegación */
-        .logo-nav {
-            height: 80px; /* Tamaño del logo para pantallas grandes */
-            width: auto;
-            transition: height 0.3s ease-in-out;
-        }
-        /* Fijamos la altura de la barra para que el logo sobresalga */
-        .nav-container {
-            height: 90px; /* Mantenemos la altura de la barra */
-        }
-        /* Contenedores de imágenes con fondos de colores */
-        .img-container-croissant {
-            background-color: #D2B48C;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .img-container-cafe {
-            background-color: #8B4513;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .img-container-tarta {
-            background-color: #F5DEB3;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .img-container-perritos {
-            background-color: #CD853F;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        /* Animación de flotar para las tarjetas de especialidades */
-        @keyframes float {
-          0% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-          100% { transform: translateY(0); }
-        }
-
-        .specialty-card {
-          animation: float 4s ease-in-out infinite;
-        }
-
-        /* Retraso escalonado para la animación de cada tarjeta */
-        #especialidades .grid > div:nth-child(2) {
-          animation-delay: 0.4s;
-        }
-        #especialidades .grid > div:nth-child(3) {
-          animation-delay: 0.8s;
-        }
-        #especialidades .grid > div:nth-child(4) {
-          animation-delay: 1.2s;
-        }
-
-        /* Estilo para las secciones con fondo de imagen */
-        .section-bg {
-            background-image: url('fondoamarillo.webp');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-        
-        /* Overlay para reducir la intensidad del fondo */
-        .section-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.7); /* Overlay blanco semitransparente */
-            z-index: 1;
-        }
-        
-        .content-above-bg {
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* Estilos para el nuevo carrusel de ofertas */
-        .ofertas-carousel-container {
-            width: 100%;
-            max-width: 100%;
-            text-align: center;
-            margin: 0 auto;
-        }
-
-        .ofertas-carousel {
-            position: relative;
-            height: 650px; /* Aumentado */
-            width: 100%;
-            perspective: 1000px;
-            margin: 0 auto;
-            touch-action: pan-y; /* Solo permitir desplazamiento vertical */
-        }
-
-        .ofertas-cards-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease;
-            touch-action: pan-y; /* Solo permitir desplazamiento vertical */
-        }
-
-        .ofertas-card {
-            position: absolute;
-            width: 95vw; /* Aumentado para móvil */
-            max-width: 420px; /* Aumentado */
-            height: 630px; /* Aumentado */
-            background: transparent; /* Hacemos el fondo transparente */
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.5s ease;
-            cursor: pointer;
-            user-select: none;
-            left: 50%;
-            transform: translateX(-50%);
-            touch-action: pan-y; /* Solo permitir desplazamiento vertical */
-            overflow: hidden; /* Mantenemos esto para recortar la imagen a los bordes redondeados */
-        }
-
-        .ofertas-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Posiciones de las cartas */
-        .ofertas-card.active {
-            transform: translateX(-50%) scale(1);
-            z-index: 10;
-            opacity: 1;
-        }
-
-        .ofertas-card.prev {
-            transform: translateX(-105%) scale(0.75); /* Ajustado */
-            z-index: 5;
-            opacity: 0.6;
-        }
-
-        .ofertas-card.next {
-            transform: translateX(5%) scale(0.75); /* Ajustado */
-            z-index: 5;
-            opacity: 0.6;
-        }
-
-        .ofertas-card.hidden {
-            transform: translateX(-180%) scale(0.6);
-            opacity: 0;
-        }
-
-        .ofertas-card.hidden-right {
-            transform: translateX(80%) scale(0.6);
-            opacity: 0;
-        }
-
-        /* Navegación */
-        .ofertas-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            color: #6a11cb;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 20;
-            transition: all 0.3s ease;
-            touch-action: manipulation; /* Mejorar respuesta táctil */
-        }
-
-        .ofertas-nav-btn:hover {
-            background: white;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .ofertas-prev-btn {
-            left: -5px; /* Ajustado */
-        }
-
-        .ofertas-next-btn {
-            right: -5px; /* Ajustado */
-        }
-
-        .ofertas-indicators {
-            display: flex;
-            justify-content: center;
-            margin-top: 25px;
-            gap: 10px;
-        }
-
-        .ofertas-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            touch-action: manipulation; /* Mejorar respuesta táctil */
-        }
-
-        .ofertas-indicator.active {
-            background: #8B4513;
-            transform: scale(1.2);
-        }
-
-        #map-iframe {
-            transition: transform 0.3s ease;
-        }
-
-        /* Ocultar el header de Google Maps en pantallas pequeñas */
-        @media (max-width: 723px) {
-            #map-iframe {
-                height: calc(100% + 50px); /* Hacemos el iframe 50px más alto que su contenedor */
-                transform: translateY(-50px); /* Lo desplazamos 50px hacia arriba */
-            }
-        }
-
-        /* Responsive para tablets y pantallas más grandes */
-        @media (min-width: 768px) {
-            .ofertas-carousel {
-                height: 750px; /* Aumentado */
-            }
-            
-            .ofertas-card {
-                width: 70vw;
-                max-width: 550px; /* Aumentado */
-                height: 730px; /* Aumentado */
-            }
-            
-            .ofertas-card.prev {
-                transform: translateX(-105%) scale(0.8); /* Ajustado */
-            }
-            
-            .ofertas-card.next {
-                transform: translateX(5%) scale(0.8); /* Ajustado */
-            }
-            
-            .ofertas-nav-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 1.7rem;
-            }
-            
-            .ofertas-prev-btn {
-                left: 15px;
-            }
-            
-            .ofertas-next-btn {
-                right: 15px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .ofertas-carousel {
-                height: 800px; /* Aumentado */
-            }
-            
-            .ofertas-card {
-                width: 520px; /* Aumentado */
-                height: 780px; /* Aumentado */
-            }
-            
-            .ofertas-card.prev {
-                transform: translateX(-115%) scale(0.8); /* Ajustado */
-            }
-            
-            .ofertas-card.next {
-                transform: translateX(15%) scale(0.8); /* Ajustado */
-            }
-            
-            .ofertas-nav-btn {
-                width: 55px;
-                height: 55px;
-                font-size: 1.8rem;
-            }
-            
-            .ofertas-prev-btn {
-                left: 20px;
-            }
-            
-            .ofertas-next-btn {
-                right: 20px;
-            }
-        }
-
-        /* Media query para pantallas de 1024px o menos */
-        @media (max-width: 1024px) {
-          .logo-nav {
-            height: 70px; /* Reducimos el tamaño del logo */
-          }
-        }
-
-        /* Media query para pantallas de 767px o menos */
-        @media (max-width: 767px) {
-          .logo-nav {
-            height: 60px; /* Hacemos el logo aún más pequeño en móvil */
-          }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body class="text-stone-800">
 
@@ -352,7 +16,7 @@
     <header class="bg-amber-800 shadow-lg sticky top-0 z-50">
         <nav class="container mx-auto px-6 nav-container flex justify-between items-center">
             <a href="#" class="flex items-center">
-                <img src="logo-blanco.webp" alt="Dulcinea" class="logo-nav">
+                <img src="assets/images/branding/logo-blanco.webp" alt="Dulcinea" class="logo-nav">
             </a>
             <div class="hidden md:flex space-x-6 items-center">
                 <a href="#ofertas" class="text-amber-100 hover:text-white transition duration-300">Ofertas</a>
@@ -423,7 +87,7 @@
                 <!-- Producto 1 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden specialty-card">
                     <div class="img-container-croissant w-full h-48">
-                        <img src="croissant.webp" alt="Imagen de un croissant de mantequilla" class="h-48 object-contain">
+                        <img src="assets/images/menu/croissant.webp" alt="Imagen de un croissant de mantequilla" class="h-48 object-contain">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold font-display text-amber-900">Croissant de Mantequilla</h3>
@@ -433,7 +97,7 @@
                 <!-- Producto 2 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden specialty-card">
                     <div class="img-container-cafe w-full h-48">
-                        <img src="cafe.webp" alt="Imagen de una taza de café" class="h-48 object-contain">
+                        <img src="assets/images/menu/cafe.webp" alt="Imagen de una taza de café" class="h-48 object-contain">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold font-display text-amber-900">Café Artesanal</h3>
@@ -443,7 +107,7 @@
                 <!-- Producto 3 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden specialty-card">
                     <div class="img-container-tarta w-full h-48">
-                        <img src="tartachocolate.webp" alt="Imagen de una porción de tarta" class="h-48 object-contain">
+                        <img src="assets/images/menu/tartachocolate.webp" alt="Imagen de una porción de tarta" class="h-48 object-contain">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold font-display text-amber-900">Tarta del Día</h3>
@@ -453,7 +117,7 @@
                 <!-- Producto 4 -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden specialty-card">
                     <div class="img-container-perritos w-full h-48">
-                        <img src="perritos.webp" alt="Imagen de un perritos gourmet" class="h-48 object-contain">
+                        <img src="assets/images/menu/perritos.webp" alt="Imagen de un perritos gourmet" class="h-48 object-contain">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold font-display text-amber-900">Salchichas Danesas</h3>
@@ -597,10 +261,10 @@
         <div class="container mx-auto px-6 content-above-bg flex flex-col md:flex-row items-center gap-12">
             <div class="w-full md:w-1/2 relative">
                 <div id="image-carousel" class="relative w-full h-64 md:h-96 rounded-lg shadow-xl overflow-hidden">
-                    <img src="dulcinea1.webp" alt="Imagen 1 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover">
-                    <img src="dulcinea2.webp" alt="Imagen 2 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover opacity-0">
-                    <img src="dulcinea3.webp" alt="Imagen 3 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover opacity-0">
-                    <img src="dulcinea4.webp" alt="Imagen 4 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover opacity-0">
+                    <img src="assets/images/gallery/dulcinea1.webp" alt="Imagen 1 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover">
+                    <img src="assets/images/gallery/dulcinea2.webp" alt="Imagen 2 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover opacity-0">
+                    <img src="assets/images/gallery/dulcinea3.webp" alt="Imagen 3 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover opacity-0">
+                    <img src="assets/images/gallery/dulcinea4.webp" alt="Imagen 4 del equipo" class="carousel-image transition-opacity duration-1000 ease-in-out absolute inset-0 w-full h-full object-cover opacity-0">
                 </div>
                 <!-- Mapa de Ubicación -->
                 <div class="absolute bottom-4 right-4 w-1/3 max-w-[220px] h-20 md:w-1/2 md:h-28 bg-white p-1 rounded-lg shadow-2xl z-10">
@@ -669,174 +333,6 @@
         </div>
     </footer>
     
-    <script>
-        // Script para el menú móvil
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Script for the 'Nosotros' image carousel
-        const carouselImages = document.querySelectorAll('.carousel-image');
-        let currentImageIndex = 0;
-        const totalImages = carouselImages.length;
-
-        if (totalImages > 0) {
-            setInterval(() => {
-                carouselImages[currentImageIndex].classList.add('opacity-0');
-                currentImageIndex = (currentImageIndex + 1) % totalImages;
-                carouselImages[currentImageIndex].classList.remove('opacity-0');
-            }, 4000); // Change image every 4 seconds
-        }
-
-        // Script para el nuevo carrusel de ofertas
-        document.addEventListener('DOMContentLoaded', function() {
-            // Datos de las ofertas (imágenes de promoción)
-            const ofertasData = [
-                { image: 'promo1.webp', alt: 'Promoción 1' },
-                { image: 'promo2.webp', alt: 'Promoción 2' },
-                { image: 'promo3.webp', alt: 'Promoción 3' }
-            ];
-            
-            const ofertasCardsContainer = document.querySelector('.ofertas-cards-container');
-            const ofertasIndicatorsContainer = document.querySelector('.ofertas-indicators');
-            const ofertasPrevBtn = document.querySelector('.ofertas-prev-btn');
-            const ofertasNextBtn = document.querySelector('.ofertas-next-btn');
-            
-            let currentOfertaIndex = 0;
-            let isDragging = false;
-            let startX = 0;
-            let startY = 0; // Para el scroll vertical
-            let currentX = 0;
-            
-            // Crear las cartas de ofertas
-            ofertasData.forEach((oferta, index) => {
-                const cardElement = document.createElement('div');
-                cardElement.className = 'ofertas-card';
-                cardElement.innerHTML = `
-                    <img src="${oferta.image}" alt="${oferta.alt}">
-                `;
-                
-                // Añadir evento de clic a cada carta
-                cardElement.addEventListener('click', () => {
-                    goToOferta(index);
-                });
-                
-                ofertasCardsContainer.appendChild(cardElement);
-                
-                // Crear indicadores
-                const indicator = document.createElement('div');
-                indicator.className = 'ofertas-indicator';
-                if (index === 0) indicator.classList.add('active');
-                
-                indicator.addEventListener('click', () => {
-                    goToOferta(index);
-                });
-                
-                ofertasIndicatorsContainer.appendChild(indicator);
-            });
-            
-            // Actualizar las posiciones de las cartas
-            function updateOfertas() {
-                const ofertasCards = document.querySelectorAll('.ofertas-card');
-                const ofertasIndicators = document.querySelectorAll('.ofertas-indicator');
-                
-                ofertasCards.forEach((card, index) => {
-                    card.classList.remove('active', 'prev', 'next', 'hidden', 'hidden-right');
-                    
-                    // Calcular la posición relativa respecto a la carta actual
-                    let position = index - currentOfertaIndex;
-                    
-                    // Ajustar para comportamiento circular
-                    const totalCards = ofertasCards.length;
-                    if (position < -Math.floor(totalCards / 2)) position += totalCards;
-                    if (position > Math.floor(totalCards / 2)) position -= totalCards;
-
-                    
-                    // Aplicar clases según la posición
-                    if (position === 0) {
-                        card.classList.add('active');
-                    } else if (position === -1 || (position === totalCards - 1 && totalCards > 2)) {
-                        card.classList.add('prev');
-                    } else if (position === 1 || (position === -(totalCards - 1) && totalCards > 2)) {
-                        card.classList.add('next');
-                    } else if (position < -1) {
-                        card.classList.add('hidden');
-                    } else if (position > 1) {
-                        card.classList.add('hidden-right');
-                    }
-                });
-                
-                // Actualizar indicadores
-                ofertasIndicators.forEach((indicator, index) => {
-                    indicator.classList.toggle('active', index === currentOfertaIndex);
-                });
-            }
-            
-            // Ir a una oferta específica
-            function goToOferta(index) {
-                currentOfertaIndex = index;
-                updateOfertas();
-            }
-            
-            // Navegación anterior
-            function prevOferta() {
-                currentOfertaIndex = (currentOfertaIndex - 1 + ofertasData.length) % ofertasData.length;
-                updateOfertas();
-            }
-            
-            // Navegación siguiente
-            function nextOferta() {
-                currentOfertaIndex = (currentOfertaIndex + 1) % ofertasData.length;
-                updateOfertas();
-            }
-            
-            // Eventos de los botones
-            ofertasPrevBtn.addEventListener('click', prevOferta);
-            ofertasNextBtn.addEventListener('click', nextOferta);
-            
-            // Inicializar
-            updateOfertas();
-            
-            // Navegación con teclado
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft') prevOferta();
-                if (e.key === 'ArrowRight') nextOferta();
-            });
-            
-            // Navegación táctil
-            ofertasCardsContainer.addEventListener('touchstart', (e) => {
-                isDragging = true;
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-                currentX = startX;
-            }, { passive: true });
-            
-            ofertasCardsContainer.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                currentX = e.touches[0].clientX;
-            }, { passive: true });
-            
-            ofertasCardsContainer.addEventListener('touchend', (e) => {
-                if (!isDragging) return;
-                isDragging = false;
-                const endX = e.changedTouches[0].clientX;
-                handleSwipe(startX, endX);
-            });
-
-            function handleSwipe(start, end) {
-                const swipeThreshold = 50; // Umbral de deslizamiento
-                const diffX = start - end;
-                
-                if (diffX > swipeThreshold) {
-                    nextOferta();
-                } else if (diffX < -swipeThreshold) {
-                    prevOferta();
-                }
-            }
-        });
-    </script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

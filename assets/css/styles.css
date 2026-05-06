@@ -1,0 +1,335 @@
+/* Estilos personalizados para aplicar las fuentes */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FFF8E1; /* Un amarillo pálido como base */
+    position: relative;
+}
+h1, h2, h3, .font-display {
+    font-family: 'Playfair Display', serif;
+}
+.menu-item-description {
+    font-size: 0.875rem; /* 14px */
+    color: #57534e; /* stone-600 */
+    padding-left: 1rem;
+}
+/* Estilo para la sección Hero con la imagen de fondo */
+.hero-section {
+    background-image: url('../images/backgrounds/fondo.webp');
+    background-size: cover;
+    background-position: center;
+}
+/* Estilo para el logo en la barra de navegación */
+.logo-nav {
+    height: 80px; /* Tamaño del logo para pantallas grandes */
+    width: auto;
+    transition: height 0.3s ease-in-out;
+}
+/* Fijamos la altura de la barra para que el logo sobresalga */
+.nav-container {
+    height: 90px; /* Mantenemos la altura de la barra */
+}
+/* Contenedores de imágenes con fondos de colores */
+.img-container-croissant {
+    background-color: #D2B48C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img-container-cafe {
+    background-color: #8B4513;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img-container-tarta {
+    background-color: #F5DEB3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img-container-perritos {
+    background-color: #CD853F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Animación de flotar para las tarjetas de especialidades */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+.specialty-card {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Retraso escalonado para la animación de cada tarjeta */
+#especialidades .grid > div:nth-child(2) {
+  animation-delay: 0.4s;
+}
+#especialidades .grid > div:nth-child(3) {
+  animation-delay: 0.8s;
+}
+#especialidades .grid > div:nth-child(4) {
+  animation-delay: 1.2s;
+}
+
+/* Estilo para las secciones con fondo de imagen */
+.section-bg {
+    background-image: url('../images/backgrounds/fondoamarillo.webp');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Overlay para reducir la intensidad del fondo */
+.section-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7); /* Overlay blanco semitransparente */
+    z-index: 1;
+}
+
+.content-above-bg {
+    position: relative;
+    z-index: 2;
+}
+
+/* Estilos para el nuevo carrusel de ofertas */
+.ofertas-carousel-container {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.ofertas-carousel {
+    position: relative;
+    height: 650px; /* Aumentado */
+    width: 100%;
+    perspective: 1000px;
+    margin: 0 auto;
+    touch-action: pan-y; /* Solo permitir desplazamiento vertical */
+}
+
+.ofertas-cards-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    touch-action: pan-y; /* Solo permitir desplazamiento vertical */
+}
+
+.ofertas-card {
+    position: absolute;
+    width: 95vw; /* Aumentado para móvil */
+    max-width: 420px; /* Aumentado */
+    height: 630px; /* Aumentado */
+    background: transparent; /* Hacemos el fondo transparente */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    user-select: none;
+    left: 50%;
+    transform: translateX(-50%);
+    touch-action: pan-y; /* Solo permitir desplazamiento vertical */
+    overflow: hidden; /* Mantenemos esto para recortar la imagen a los bordes redondeados */
+}
+
+.ofertas-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Posiciones de las cartas */
+.ofertas-card.active {
+    transform: translateX(-50%) scale(1);
+    z-index: 10;
+    opacity: 1;
+}
+
+.ofertas-card.prev {
+    transform: translateX(-105%) scale(0.75); /* Ajustado */
+    z-index: 5;
+    opacity: 0.6;
+}
+
+.ofertas-card.next {
+    transform: translateX(5%) scale(0.75); /* Ajustado */
+    z-index: 5;
+    opacity: 0.6;
+}
+
+.ofertas-card.hidden {
+    transform: translateX(-180%) scale(0.6);
+    opacity: 0;
+}
+
+.ofertas-card.hidden-right {
+    transform: translateX(80%) scale(0.6);
+    opacity: 0;
+}
+
+/* Navegación */
+.ofertas-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: #6a11cb;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+    transition: all 0.3s ease;
+    touch-action: manipulation; /* Mejorar respuesta táctil */
+}
+
+.ofertas-nav-btn:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.ofertas-prev-btn {
+    left: -5px; /* Ajustado */
+}
+
+.ofertas-next-btn {
+    right: -5px; /* Ajustado */
+}
+
+.ofertas-indicators {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    gap: 10px;
+}
+
+.ofertas-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    touch-action: manipulation; /* Mejorar respuesta táctil */
+}
+
+.ofertas-indicator.active {
+    background: #8B4513;
+    transform: scale(1.2);
+}
+
+#map-iframe {
+    transition: transform 0.3s ease;
+}
+
+/* Ocultar el header de Google Maps en pantallas pequeñas */
+@media (max-width: 723px) {
+    #map-iframe {
+        height: calc(100% + 50px); /* Hacemos el iframe 50px más alto que su contenedor */
+        transform: translateY(-50px); /* Lo desplazamos 50px hacia arriba */
+    }
+}
+
+/* Responsive para tablets y pantallas más grandes */
+@media (min-width: 768px) {
+    .ofertas-carousel {
+        height: 750px; /* Aumentado */
+    }
+
+    .ofertas-card {
+        width: 70vw;
+        max-width: 550px; /* Aumentado */
+        height: 730px; /* Aumentado */
+    }
+
+    .ofertas-card.prev {
+        transform: translateX(-105%) scale(0.8); /* Ajustado */
+    }
+
+    .ofertas-card.next {
+        transform: translateX(5%) scale(0.8); /* Ajustado */
+    }
+
+    .ofertas-nav-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.7rem;
+    }
+
+    .ofertas-prev-btn {
+        left: 15px;
+    }
+
+    .ofertas-next-btn {
+        right: 15px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ofertas-carousel {
+        height: 800px; /* Aumentado */
+    }
+
+    .ofertas-card {
+        width: 520px; /* Aumentado */
+        height: 780px; /* Aumentado */
+    }
+
+    .ofertas-card.prev {
+        transform: translateX(-115%) scale(0.8); /* Ajustado */
+    }
+
+    .ofertas-card.next {
+        transform: translateX(15%) scale(0.8); /* Ajustado */
+    }
+
+    .ofertas-nav-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 1.8rem;
+    }
+
+    .ofertas-prev-btn {
+        left: 20px;
+    }
+
+    .ofertas-next-btn {
+        right: 20px;
+    }
+}
+
+/* Media query para pantallas de 1024px o menos */
+@media (max-width: 1024px) {
+  .logo-nav {
+    height: 70px; /* Reducimos el tamaño del logo */
+  }
+}
+
+/* Media query para pantallas de 767px o menos */
+@media (max-width: 767px) {
+  .logo-nav {
+    height: 60px; /* Hacemos el logo aún más pequeño en móvil */
+  }
+}
