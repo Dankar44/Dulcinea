@@ -1,0 +1,6 @@
+# No subir a Vercel archivos que no sirve la web
+docs/
+archive/
+*.pdf
+*.psd
+*.ai
